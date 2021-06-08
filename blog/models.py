@@ -2,12 +2,13 @@ from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from django.utils import timezone
+from taggit.managers import TaggableManager
 
 
 class PublishedManager(models.Manager):
     def get_queryset(self):
-        return super(PublishedManager, self)\
-            .get_queryset()\
+        return super(PublishedManager, self) \
+            .get_queryset() \
             .filter(status='published')
 
 
@@ -31,6 +32,7 @@ class Post(models.Model):
                               default='draft')
     objects = models.Manager()
     published = PublishedManager()
+    tags = TaggableManager()
 
     class Meta:
         ordering = ('-publish',)
